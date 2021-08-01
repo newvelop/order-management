@@ -25,10 +25,14 @@ public class ReviewService {
         if (!orderOptional.isPresent()) {
             throw new NotFoundException("Could not write review for order " + orderId + " because have already written");
         }
-        if (orderOptional.get().getReview().getSeq() != null) {
+        if (orderOptional.get().getReview() != null) {
             throw new UnableInsertException("review is already written");
         } else if (!orderOptional.get().getState().getValue().equals(OrderState.COMPLETED.getValue())) {
             throw new UnableInsertException("Could not write review for order "+ orderId + " because state(REQUESTED) is not allowed");
+        } else if (reviewDto.getContent() == null) {
+            throw new UnableInsertException("Could not write review for order "+ orderId + " because content is null");
+        } else if (reviewDto.getContent().length() > 1000) {
+            throw new UnableInsertException("Could not write review for order "+ orderId + " because content is too long");
         }
 
         Optional<Product> productOptional = productRepository.findById(orderOptional.get().getProductId());
@@ -39,6 +43,8 @@ public class ReviewService {
                 .build();
         productRepository.update(updateProduct);
 
+        reviewDto.setUserSeq(orderOptional.get().getUserSeq());
+        reviewDto.setProductId(updateProduct.getSeq());
         Review review = reviewRepository.insert(Review.reviewFromReviewDto(reviewDto));
 
         Order updateOrder = Order.orderFromOrderDto(orderOptional.get());

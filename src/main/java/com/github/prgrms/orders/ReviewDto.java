@@ -61,11 +61,11 @@ public class ReviewDto {
 
     public static ReviewDto reviewDtoFromReview(Review Review) {
         ReviewDto reviewDto = new ReviewDto();
-        reviewDto.seq = reviewDto.getSeq();
-        reviewDto.productId = reviewDto.getProductId();
-        reviewDto.userSeq = reviewDto.getUserSeq();
-        reviewDto.content = reviewDto.getContent();
-        reviewDto.createAt = defaultIfNull(reviewDto.getCreateAt(), now());
+        reviewDto.seq = Review.getSeq();
+        reviewDto.productId = Review.getProductSeq();
+        reviewDto.userSeq = Review.getUserSeq();
+        reviewDto.content = Review.getContent();
+        reviewDto.createAt = defaultIfNull(Review.getCreateAt(), now());
         return reviewDto;
     }
 }

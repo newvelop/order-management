@@ -39,8 +39,8 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public void update(Product product) {
-        jdbcTemplate.update("UPDATE products SET name=?, details=?, review_count=?, create_at=? WHERE seq=?",
-                product.getName(), product.getDetails(), product.getReviewCount(), product.getCreateAt(), product.getSeq());
+        jdbcTemplate.update("UPDATE products SET name=?, details=?, review_count=? WHERE seq=?",
+                product.getName(), product.getDetails().orElse(null), product.getReviewCount(), product.getSeq());
     }
 
     static RowMapper<Product> mapper = (rs, rowNum) ->

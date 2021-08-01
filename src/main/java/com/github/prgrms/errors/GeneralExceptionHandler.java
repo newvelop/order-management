@@ -65,7 +65,8 @@ public class GeneralExceptionHandler {
     }
 
     @ExceptionHandler({
-            UnableUpdateException.class
+            UnableUpdateException.class,
+            UnableInsertException.class
     })
     public ResponseEntity<?> handleUnableRequestException(Exception e) {
         return newResponse(e, HttpStatus.BAD_REQUEST);

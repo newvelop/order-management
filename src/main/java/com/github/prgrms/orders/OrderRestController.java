@@ -32,6 +32,7 @@ public class OrderRestController {
         .orElseThrow(() -> new NotFoundException("Could not found order for " + id)));
     }
 
+    //4가지 api를 합칠 수 있으나, 테스트 요구사항이 메소드 구현이기 때문에 일단 4가지 분리시켜놨음
     @PatchMapping("/{id}/accept")
     ApiUtils.ApiResult<Boolean> accept(@PathVariable Long id) {
         return success(orderService.accept(id));

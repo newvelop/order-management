@@ -29,7 +29,7 @@ public class JdbcReviewRepository implements ReviewRepository {
             new PreparedStatementCreator() {
                 @Override
                 public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                    PreparedStatement statement = connection.prepareStatement(insertSql);
+                    PreparedStatement statement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
                     statement.setLong(1, review.getUserSeq());
                     statement.setLong(2, review.getProductSeq());
                     statement.setString(3, review.getContent());
